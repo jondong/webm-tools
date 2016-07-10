@@ -6,26 +6,39 @@
 ##  in the file PATENTS.  All contributing project authors may
 ##  be found in the AUTHORS file in the root of the source tree.
 cmake_minimum_required(VERSION 2.8)
-project(WEBMTOOLS)
+project(webm-tools)
+
+include(ExternalProject)
 
 set(WEBMTOOLS_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-# TODO(tomfinegan): The libwebm source directory must be configurable.
-set(LIBWEBM_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../libwebm")
-# This is where LIBWEBM targets are built.
-set(LIBWEBM_BUILD_DIR "${CMAKE_BINARY_DIR}/libwebm_build")
 
-# Libwebm section.
-# Add the libwebm CMakeLists.txt and set the binary dir to allow access to
-# libwebm build output.
-add_subdirectory("${LIBWEBM_SRC_DIR}" "${LIBWEBM_BUILD_DIR}")
-include_directories("${LIBWEBM_SRC_DIR}"
-                    "${WEBMTOOLS_SRC_DIR}/shared")
+ExternalProject_Add(libwebm
+  PREFIX ${CMAKE_SOURCE_DIR}/libwebm
+  GIT_REPOSITORY https://github.com/webmproject/libwebm.git
+  GIT_TAG master
+  INSTALL_COMMAND ""
+)
 
-add_executable(webm_info
+include_directories(${CMAKE_SOURCE_DIR}/libwebm/src/libwebm)
+
+add_library(${PROJECT_NAME} STATIC
   "${WEBMTOOLS_SRC_DIR}/shared/indent.cc"
   "${WEBMTOOLS_SRC_DIR}/shared/indent.h"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_chunk_writer.cc"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_chunk_writer.h"
   "${WEBMTOOLS_SRC_DIR}/shared/webm_endian.cc"
   "${WEBMTOOLS_SRC_DIR}/shared/webm_endian.h"
-  "${WEBMTOOLS_SRC_DIR}/webm_info/webm_info.cc")
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_file.cc"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_file.h"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_incremental_reader.cc"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_incremental_reader.h"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_live_muxer.cc"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_live_muxer.h"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_constants.h"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_tools_types.h")
 
-target_link_libraries(webm_info LINK_PUBLIC webm)
+add_dependencies(${PROJECT_NAME} libwebm)
+
+target_link_libraries(${PROJECT_NAME} LINK_PUBLIC webm)
+
+install(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION lib)
