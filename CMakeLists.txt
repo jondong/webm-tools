@@ -21,7 +21,7 @@ ExternalProject_Add(libwebm
 
 include_directories(${CMAKE_SOURCE_DIR}/libwebm/src/libwebm)
 
-add_library(${PROJECT_NAME} STATIC
+add_library(${PROJECT_NAME} SHARED
   "${WEBMTOOLS_SRC_DIR}/shared/indent.cc"
   "${WEBMTOOLS_SRC_DIR}/shared/indent.h"
   "${WEBMTOOLS_SRC_DIR}/shared/webm_chunk_writer.cc"
@@ -39,6 +39,6 @@ add_library(${PROJECT_NAME} STATIC
 
 add_dependencies(${PROJECT_NAME} libwebm)
 
-target_link_libraries(${PROJECT_NAME} LINK_PUBLIC webm)
+#target_link_libraries(${PROJECT_NAME} LINK_PUBLIC webm)
 
-install(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION lib)
+install(TARGETS ${PROJECT_NAME} DESTINATION lib)
