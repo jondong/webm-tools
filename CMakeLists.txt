@@ -13,13 +13,14 @@ include(ExternalProject)
 set(WEBMTOOLS_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 ExternalProject_Add(libwebm
-  PREFIX ${CMAKE_SOURCE_DIR}/libwebm
+  PREFIX libwebm
   GIT_REPOSITORY https://github.com/webmproject/libwebm.git
   GIT_TAG master
   INSTALL_COMMAND ""
 )
 
-include_directories(${CMAKE_SOURCE_DIR}/libwebm/src/libwebm)
+ExternalProject_Get_Property(libwebm source_dir)
+include_directories(${source_dir})
 
 add_library(${PROJECT_NAME} SHARED
   "${WEBMTOOLS_SRC_DIR}/shared/indent.cc"
