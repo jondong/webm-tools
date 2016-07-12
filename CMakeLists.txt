@@ -14,12 +14,12 @@ set(WEBMTOOLS_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 ExternalProject_Add(libwebm
   PREFIX libwebm
-  GIT_REPOSITORY https://github.com/webmproject/libwebm.git
+  GIT_REPOSITORY https://github.com/jondong/libwebm.git
   GIT_TAG master
   INSTALL_COMMAND ""
 )
 
-ExternalProject_Get_Property(libwebm source_dir)
+ExternalProject_Get_Property(libwebm source_dir binary_dir)
 include_directories(${source_dir})
 
 add_library(${PROJECT_NAME} SHARED
@@ -40,6 +40,6 @@ add_library(${PROJECT_NAME} SHARED
 
 add_dependencies(${PROJECT_NAME} libwebm)
 
-#target_link_libraries(${PROJECT_NAME} LINK_PUBLIC webm)
+target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${binary_dir}/libwebm.so)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
