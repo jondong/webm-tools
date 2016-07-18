@@ -40,6 +40,10 @@ add_library(${PROJECT_NAME} SHARED
 
 add_dependencies(${PROJECT_NAME} libwebm)
 
-target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${binary_dir}/libwebm.so)
+target_link_libraries(${PROJECT_NAME} LINK_PUBLIC
+  ${binary_dir}/libmkvmuxer.so
+  ${binary_dir}/libmkvparser.so
+  ${binary_dir}/libwebm_parser.so
+  ${binary_dir}/libwebm.so)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
