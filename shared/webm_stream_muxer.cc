@@ -276,6 +276,10 @@ int WebMStreamMuxer::WriteFrame(const uint8* data, size_t size,
     fprintf(stderr, "AddFrame failed.\n");
     return kVideoWriteError;
   }
+
+  // Force to update chunk.
+  ptr_writer_->ElementStartNotify(mkvmuxer::kMkvCluster,
+                                  ptr_writer_->bytes_written());
   return kSuccess;
 }
 
