@@ -317,8 +317,8 @@ int WebMStreamMuxer::ReadChunk(int32 buffer_capacity, uint8* ptr_buf) {
     return kUserBufferTooSmall;
   }
 
-  fprintf(stdout, "ReadChunk capacity=%d length=%d total buffered=%zd\n",
-          buffer_capacity, chunk_length, buffer_.size());
+  //fprintf(stdout, "ReadChunk capacity=%d length=%d total buffered=%zd\n",
+  //        buffer_capacity, chunk_length, buffer_.size());
 
   // Copy chunk to user buffer, and erase it from |buffer_|.
   memcpy(ptr_buf, &buffer_[0], chunk_length);

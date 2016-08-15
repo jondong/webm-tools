@@ -66,7 +66,7 @@ int32 WebMChunkWriter::Write(const void* ptr_buffer, uint32 buffer_length) {
 void WebMChunkWriter::ElementStartNotify(uint64 element_id, int64 position) {
   if (element_id == mkvmuxer::kMkvCluster) {
     chunk_end_ = bytes_buffered_;
-    fprintf(stdout, "chunk_end_=%lld position=%lld\n", chunk_end_, position);
+    //fprintf(stdout, "chunk_end_=%lld position=%lld\n", chunk_end_, position);
   }
 }
 
