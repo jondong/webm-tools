@@ -35,6 +35,8 @@ add_library(${PROJECT_NAME} SHARED
   "${WEBMTOOLS_SRC_DIR}/shared/webm_incremental_reader.h"
   "${WEBMTOOLS_SRC_DIR}/shared/webm_live_muxer.cc"
   "${WEBMTOOLS_SRC_DIR}/shared/webm_live_muxer.h"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_stream_muxer.cc"
+  "${WEBMTOOLS_SRC_DIR}/shared/webm_stream_muxer.h"
   "${WEBMTOOLS_SRC_DIR}/shared/webm_constants.h"
   "${WEBMTOOLS_SRC_DIR}/shared/webm_tools_types.h")
 
