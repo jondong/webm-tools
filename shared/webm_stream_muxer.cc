@@ -66,6 +66,7 @@ int WebMStreamMuxer::Init() {
   }
 
   ptr_segment_->set_mode(mkvmuxer::Segment::kLive);
+  ptr_segment_->set_max_cluster_duration(1000000000ULL); // 1s
 
   // Set segment info fields.
   using mkvmuxer::SegmentInfo;
@@ -274,16 +275,12 @@ int WebMStreamMuxer::WriteFrame(const uint8* data, size_t size,
                               timestamp_ns,
                               is_key)) {
     fprintf(stderr, "AddFrame failed.\n");
-
-    // Force write to update chunk.
-    ptr_writer_->ElementStartNotify(mkvmuxer::kMkvCluster,
-                                    ptr_writer_->bytes_written());
     return kVideoWriteError;
   }
 
   // Force to update chunk.
-  ptr_writer_->ElementStartNotify(mkvmuxer::kMkvCluster,
-                                  ptr_writer_->bytes_written());
+  //ptr_writer_->ElementStartNotify(mkvmuxer::kMkvCluster,
+  //                                ptr_writer_->bytes_written());
   return kSuccess;
 }
 
