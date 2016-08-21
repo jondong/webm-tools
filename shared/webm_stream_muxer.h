@@ -101,7 +101,7 @@ class WebMStreamMuxer {
 
   // Initializes libwebm for muxing in live mode. Returns |kSuccess| when
   // successful.
-  int Init();
+  int Init(uint64 maxClusterDuration);
 
   // Adds an audio track to |ptr_segment_| and returns the track number [1-127].
   // Returns |kAudioTrackAlreadyExists| when the audio track has already been
