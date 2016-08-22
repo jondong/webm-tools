@@ -101,7 +101,10 @@ class WebMLiveMuxer {
 
   // Initializes libwebm for muxing in live mode. Returns |kSuccess| when
   // successful.
-  int Init();
+  // max_cluster_duration will set the cluster's max duration in miliseconds.
+  // The default value is set to 10ms to make the output of live muxer more like
+  // a live stream.
+  int Init(unsigned max_cluster_duration = 10);
 
   // Adds an audio track to |ptr_segment_| and returns the track number [1-127].
   // Returns |kAudioTrackAlreadyExists| when the audio track has already been

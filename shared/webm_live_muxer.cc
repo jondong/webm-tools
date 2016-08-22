@@ -40,7 +40,7 @@ WebMLiveMuxer::WebMLiveMuxer()
 WebMLiveMuxer::~WebMLiveMuxer() {
 }
 
-int WebMLiveMuxer::Init() {
+int WebMLiveMuxer::Init(unsigned max_cluster_duration) {
   // Construct and Init |WebMChunkWriter|. It handles writes coming from
   // libwebm.
   ptr_writer_.reset(new (std::nothrow) WebMChunkWriter());  // NOLINT
@@ -66,6 +66,7 @@ int WebMLiveMuxer::Init() {
   }
 
   ptr_segment_->set_mode(mkvmuxer::Segment::kLive);
+  ptr_segment_->set_max_cluster_duration(max_cluster_duration * 1000000ULL);
 
   // Set segment info fields.
   using mkvmuxer::SegmentInfo;
