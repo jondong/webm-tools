@@ -16,6 +16,7 @@ ExternalProject_Add(libwebm
   PREFIX libwebm
   GIT_REPOSITORY https://github.com/webmproject/libwebm.git
   GIT_TAG master
+  PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/libwebm.patch
   INSTALL_COMMAND ""
 )
 

@@ -1,0 +1,64 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ad7bea4..0b84d2a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -18,7 +18,7 @@ option(ENABLE_WEBMINFO "Enables building webm_info." ON)
+ option(ENABLE_TESTS "Enables tests." OFF)
+ option(ENABLE_IWYU "Enables include-what-you-use support." OFF)
+ option(ENABLE_WERROR "Enable warnings as errors." OFF)
+-option(ENABLE_WEBM_PARSER "Enables new parser API." OFF)
++option(ENABLE_WEBM_PARSER "Enables new parser API." ON)
+ set(GTEST_SRC_DIR "${LIBWEBM_SRC_DIR}/../googletest" CACHE PATH
+     "Path to Googletest git repository.")
+
+@@ -45,7 +45,7 @@ set(CMAKE_CXX_FLAGS "-D__STDC_LIMIT_MACROS ${CMAKE_CXX_FLAGS}")
+
+ # mkvmuxer section.
+ # TODO(tomfinegan): move to mkvmuxer/CMakeLists.txt
+-add_library(mkvmuxer STATIC
++add_library(mkvmuxer SHARED
+             "${LIBWEBM_SRC_DIR}/mkvmuxer/mkvmuxer.cc"
+             "${LIBWEBM_SRC_DIR}/mkvmuxer/mkvmuxer.h"
+             "${LIBWEBM_SRC_DIR}/mkvmuxer/mkvmuxertypes.h"
+@@ -57,7 +57,7 @@ add_library(mkvmuxer STATIC
+
+ # mkvparser section.
+ # TODO(tomfinegan): move to mkvparser/CMakeLists.txt.
+-add_library(mkvparser STATIC
++add_library(mkvparser SHARED
+             "${LIBWEBM_SRC_DIR}/mkvparser/mkvparser.cc"
+             "${LIBWEBM_SRC_DIR}/mkvparser/mkvparser.h"
+             "${LIBWEBM_SRC_DIR}/mkvparser/mkvreader.cc"
+@@ -71,7 +71,7 @@ add_library(mkvparser STATIC
+ # TODO(tomfinegan): add doxygen generation target.
+ if (ENABLE_WEBM_PARSER)
+ include_directories(webm_parser webm_parser/include)
+-add_library(webm_parser STATIC
++add_library(webm_parser SHARED
+             "${LIBWEBM_SRC_DIR}/webm_parser/include/webm/buffer_reader.h"
+             "${LIBWEBM_SRC_DIR}/webm_parser/include/webm/callback.h"
+             "${LIBWEBM_SRC_DIR}/webm_parser/include/webm/dom_types.h"
+@@ -164,7 +164,7 @@ add_library(webm_parser STATIC
+ endif()
+
+ # Libwebm section.
+-add_library(webm STATIC
++add_library(webm SHARED
+             "${LIBWEBM_SRC_DIR}/common/file_util.cc"
+             "${LIBWEBM_SRC_DIR}/common/file_util.h"
+             "${LIBWEBM_SRC_DIR}/common/hdr_util.cc"
+@@ -241,11 +241,13 @@ endif ()
+
+ if (ENABLE_WEBMTS)
+   # webmts (PES/TS support) library section.
+-  add_library(webmts
++  add_library(webmts SHARED
+               "${LIBWEBM_SRC_DIR}/common/libwebm_util.cc"
+               "${LIBWEBM_SRC_DIR}/common/libwebm_util.h"
+               "${LIBWEBM_SRC_DIR}/common/video_frame.cc"
+               "${LIBWEBM_SRC_DIR}/common/video_frame.h"
++              "${LIBWEBM_SRC_DIR}/common/file_util.cc"
++              "${LIBWEBM_SRC_DIR}/common/file_util.h"
+               "${LIBWEBM_SRC_DIR}/m2ts/vpxpes2ts.cc"
+               "${LIBWEBM_SRC_DIR}/m2ts/vpxpes2ts.h"
+               "${LIBWEBM_SRC_DIR}/m2ts/vpxpes_parser.cc"
